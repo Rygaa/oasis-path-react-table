@@ -1,72 +1,52 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { TableProps } from "./table.types";
-import { ResizableBox } from "react-resizable";
-import TableHeader from "../Column/ColumnContainer";
+
+import TableHeader from "../Column/HeaderContainer";
 import TableBody from "../Row/RowContainer";
-import Row from "../Row/Row";
-import Column from "../Column/Column";
-import Cell from "../Cell/Cell";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
 
-const Table: FC<TableProps> = ({ children, className, style, rows, columns, ...props }) => {
+const Table: FC<TableProps> = ({
+  className,
+  style,
+  rows,
+  columns,
+  columnstyle,
+  rowstyle,
+  cellstyle,
+  handleDrag,
+}) => {
+  const [columnsData, setColumnsData] = useState(columns);
+  const [rowsData, setRowsData] = useState(rows);
+
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      setColumnsData((items: any) => {
+        const oldIndex = items.indexOf(active.id);
+        const newIndex = items.indexOf(over.id);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+      setRowsData((rows: any) => {
+        const oldIndex = columnsData.indexOf(active.id);
+        const newIndex = columnsData.indexOf(over.id);
+        return rows.map((row: any) => {
+          return arrayMove(row, oldIndex, newIndex);
+        });
+      });
+      if (typeof handleDrag === "function") {
+        handleDrag();
+      }
+    }
+  };
   return (
-    <div>
-      <TableHeader>
-        {columns.map(
-          (
-            column: {
-              label:
-                | string
-                | number
-                | boolean
-                | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-                | Iterable<React.ReactNode>
-                | React.ReactPortal
-                | null
-                | undefined;
-            },
-            index: React.Key | null | undefined
-          ) => (
-            <ResizableBox
-              width={200}
-              height={200}
-              draggableOpts={{ grid: [25, 25] }}
-              minConstraints={[100, 100]}
-              maxConstraints={[300, 300]}>
-              <Column key={index}>{column.label}</Column>
-            </ResizableBox>
-          )
-        )}
-      </TableHeader>
-
-      <TableBody>
-        {rows.map(
-          (
-            row: {
-              label:
-                | string
-                | number
-                | boolean
-                | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-                | Iterable<React.ReactNode>
-                | React.ReactPortal
-                | null
-                | undefined;
-            },
-            index: React.Key | null | undefined
-          ) => (
-            <ResizableBox
-              width={200}
-              height={200}
-              draggableOpts={{ grid: [25, 25] }}
-              minConstraints={[100, 100]}
-              maxConstraints={[300, 300]}>
-              <Row key={index}>
-                <Cell>{row.label}</Cell>
-              </Row>
-            </ResizableBox>
-          )
-        )}
-      </TableBody>
+    <div className={className} style={{ ...style }}>
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        {/* Columns */}
+        <TableHeader columns={columnsData} columnstyle={columnstyle || {}} />
+        {/* Rows */}
+        <TableBody rows={rowsData} rowsstyle={rowstyle || {}} cellstyle={cellstyle || {}} />
+      </DndContext>
     </div>
   );
 };

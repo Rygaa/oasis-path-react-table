@@ -1,12 +1,11 @@
-export interface RowContainerProps {
+export interface ColumnContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   style?: React.CSSProperties;
-  rows: any;
-  rowsstyle: React.CSSProperties;
-  cellstyle: React.CSSProperties;
+  columns: any;
+  columnstyle: React.CSSProperties;
 }
 
-export interface RowProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   id?: string;
   className?: string;
   style?: React.CSSProperties;

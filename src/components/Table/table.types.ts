@@ -1,7 +1,10 @@
 export interface TableProps {
-    children: React.ReactNode;
-    className?: string;
-    style?: React.CSSProperties;
-    rows:any
-    columns:any
+  className?: string;
+  style?: React.CSSProperties;
+  columnstyle?: React.CSSProperties;
+  rowstyle?: React.CSSProperties;
+  cellstyle?: React.CSSProperties;
+  rows: any;
+  columns: any;
+  handleDrag: (...args: any[]) => void;
 }

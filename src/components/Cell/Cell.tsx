@@ -1,20 +1,23 @@
-import React, { FC } from 'react'
-import { CellProps } from './cell.types'
-const Cell:FC<CellProps> = ({
-    children,
-    className,
-    style,
-    ...props
-}) => {
-  return (
-    <div
-        className={className}
-        style={style}
-        {...props}
-    >
-        {children}
-    </div>
-  )
+import React,{ FC } from 'react';
+
+interface CellProps {
+  content: string | number;
 }
 
-export default Cell
+export const Cell: FC<CellProps> = ({ content }) => {
+  return (
+    <div
+      style={{
+        height: '100%',
+        width: '100%',
+        border: 'solid 1px gray',
+        background: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {content}
+    </div>
+  );
+};
