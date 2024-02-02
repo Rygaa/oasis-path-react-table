@@ -1,6 +1,5 @@
 import React, { FC, useState } from "react";
 import { TableProps } from "./table.types";
-
 import TableHeader from "../Column/HeaderContainer";
 import TableBody from "../Row/RowContainer";
 import { DndContext, closestCenter } from "@dnd-kit/core";
@@ -39,6 +38,7 @@ const Table: FC<TableProps> = ({
       }
     }
   };
+
   return (
     <div className={className} style={{ ...style }}>
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
