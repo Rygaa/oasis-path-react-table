@@ -1,22 +1,11 @@
-import React, { FC } from 'react'
-import { RowProps } from './row.types'
+import React, { FC } from "react";
+import { RowProps } from "./Row.types";
+import { VList } from "virtua";
 
-
-const Row:FC<RowProps> = ({
-    children,
-    className,
-    style,
-    ...props
-}) => {
+export const Row: FC<RowProps> = ({ children }) => {
   return (
-    <div
-        className={className}
-        style={style}
-        {...props}
-    >
-        {children}
-    </div>
-  )
-}
-
-export default Row
+    <VList style={{ height: 50, overflow: "hidden" }} horizontal>
+      {children}
+    </VList>
+  );
+};
