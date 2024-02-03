@@ -1,6 +1,0 @@
-export * from "./Body"
-export * from "./Cell"
-export * from "./Column"
-export * from "./Header"
-export * from "./Row"
-export * from "./Table"
