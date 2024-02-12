@@ -1,8 +1,10 @@
-import React, { FC } from "react";
-import { CellProps } from "./Cell.types";
+import React, { FC, HTMLAttributes, ReactNode } from "react";
 
- export const Cell: FC<CellProps> = ({ children }) => {
-  return <div>{children}</div>;
+interface CellProps extends HTMLAttributes<HTMLDivElement> {
+  children: ReactNode;
+}
+const Cell: FC<CellProps> = ({ children, ...props }) => {
+  return <div {...props}>{children}</div>;
 };
 
-
+export default Cell;

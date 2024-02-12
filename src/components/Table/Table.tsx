@@ -1,10 +1,14 @@
-import React, { FC } from "react";
-import { DndContext, closestCenter } from "@dnd-kit/core";
-import { TableProps } from "./table.types";
+import { closestCenter, DndContext } from "@dnd-kit/core";
+import React, { FC, ReactNode, HTMLAttributes } from "react";
 
-export const Table: FC<TableProps> = ({ children, style, className, handleDragEnd }) => {
+interface TableProps extends HTMLAttributes<HTMLDivElement> {
+  children: ReactNode;
+  handleDragEnd: (event: any) => void;
+}
+
+const Table: FC<TableProps> = ({ children, handleDragEnd, ...props }) => {
   return (
-    <div style={style} className={className}>
+    <div {...props}>
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         {children}
       </DndContext>
@@ -12,3 +16,4 @@ export const Table: FC<TableProps> = ({ children, style, className, handleDragEn
   );
 };
 
+export default Table;

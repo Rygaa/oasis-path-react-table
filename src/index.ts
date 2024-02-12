@@ -1,1 +1,1 @@
-export { Body, Cell, Column, Header, Row, Table } from "./components";
+export * from './components'

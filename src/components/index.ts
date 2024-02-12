@@ -1,6 +1,6 @@
-export {Body} from "./Body"
-export {Cell} from "./Cell"
-export {Column} from "./Column"
-export {Header} from "./Header"
-export {Row} from "./Row"
-export {Table} from "./Table"
+export {default as Cell} from './Cell';
+export {default as Body} from "./Body";
+export {default as Column} from "./Column";
+export {default as Header} from "./Header";
+export {default as Row} from "./Row"
+export {default as Table} from "./Table"

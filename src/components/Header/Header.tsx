@@ -1,13 +1,19 @@
-import React, { FC } from "react";
-import { HeaderProps } from "./Header.types";
-import { SortableContext, horizontalListSortingStrategy } from "@dnd-kit/sortable";
+import { horizontalListSortingStrategy, SortableContext } from "@dnd-kit/sortable";
+import React, { FC, HTMLAttributes, ReactNode } from "react";
 
-export const Header: FC<HeaderProps> = ({ children, columns }) => {
+interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
+  children: ReactNode;
+  columns: any;
+}
+
+const Header: FC<HeaderProps> = ({ children, columns, ...props }) => {
   return (
     <div
       style={{
         display: "flex",
-      }}>
+        ...props.style, // Merge provided style with default styles
+      }}
+      {...props}>
       <SortableContext items={columns} strategy={horizontalListSortingStrategy}>
         {children}
       </SortableContext>
@@ -15,3 +21,4 @@ export const Header: FC<HeaderProps> = ({ children, columns }) => {
   );
 };
 
+export default Header;
