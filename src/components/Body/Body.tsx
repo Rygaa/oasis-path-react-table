@@ -1,21 +1,30 @@
-import React, { FC, HTMLAttributes, ReactNode } from "react";
+import React, { FC, HTMLAttributes, ReactElement } from "react";
+import { VList } from "virtua";
 
 interface BodyProps extends HTMLAttributes<HTMLDivElement> {
-  children: ReactNode;
+  children: ReactElement[];
+  columnsWidth?: number[];
 }
 
-const Body: FC<BodyProps> = ({ children, ...props }) => {
+const Body: FC<BodyProps> = ({ children, columnsWidth, ...props }) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        ...props.style, // Merge provided style with default styles
-      }}
-      {...props}
-    >
-      {children}
-    </div>
+
+      <VList
+        className="vlist"
+        style={{
+          height: "100%",
+          width: "100%",
+        }}
+      >
+        {children &&
+          children.length > 0 &&
+          children.map((child, index) =>
+            React.cloneElement(child, {
+              columnsWidth,
+              columnIndex: index,
+            })
+          )}
+      </VList>
   );
 };
 
