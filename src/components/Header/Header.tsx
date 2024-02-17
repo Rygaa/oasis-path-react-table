@@ -1,21 +1,40 @@
 import { horizontalListSortingStrategy, SortableContext } from "@dnd-kit/sortable";
-import React, { FC, HTMLAttributes, ReactNode } from "react";
+import React, { FC, HTMLAttributes, ReactElement, ReactNode } from "react";
 
 interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
-  children: ReactNode;
-  columns: any;
+  children: ReactElement[];
+  setColumnsWidth?: any;
+  columnsWidth?: number[];
+  key?: "lol";
 }
 
-const Header: FC<HeaderProps> = ({ children, columns, ...props }) => {
+const Header: FC<HeaderProps> = ({ key = "lol", children, setColumnsWidth, columnsWidth, ...props }) => {
+  const columns: { id: string }[] =
+    children && children.length > 0 ? children.map((child) => ({ id: child.props.id })) : [];
+
   return (
     <div
       style={{
-        display: "flex",
-        ...props.style, // Merge provided style with default styles
+        width: "max-content",
+        backgroundColor: "red",
+        flex: 1,
+        position: "sticky",
+        top: 0,
+        zIndex: 55,
+        height: "min-content",
       }}
-      {...props}>
+      {...props}
+    >
       <SortableContext items={columns} strategy={horizontalListSortingStrategy}>
-        {children}
+        {children &&
+          children.length > 0 &&
+          children.map((child, index) =>
+            React.cloneElement(child, {
+              columnsWidth,
+              columnIndex: index,
+              setColumnsWidth,
+            })
+          )}
       </SortableContext>
     </div>
   );

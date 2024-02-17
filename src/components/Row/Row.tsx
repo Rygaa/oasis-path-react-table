@@ -1,15 +1,23 @@
-import React, { FC ,ReactNode} from "react";
-import { VList } from "virtua";
+import React, { FC, ReactElement } from "react";
 
 interface RowProps {
-  children: ReactNode;
+  children: ReactElement[];
+  columnsWidth?: number[];
+  columnIndex?: number;
 }
 
-const Row: FC<RowProps> = ({ children }) => {
+const Row: FC<RowProps> = ({ children, columnsWidth, columnIndex }) => {
   return (
-    <VList style={{ height: 60, overflow: "hidden" }} horizontal>
-      {children}
-    </VList>
+    <div style={{ display: "flex", height: "100%", width: "100%" }}>
+      {children &&
+        children.length > 0 &&
+        children.map((child, index) =>
+          React.cloneElement(child, {
+            columnsWidth,
+            columnIndex: index,
+          })
+        )}
+    </div>
   );
 };
-export default Row
+export default Row;
