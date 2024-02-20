@@ -14,7 +14,8 @@ const Column: FC<ColumnProps> = ({ children, id, ...props }) => {
   // Received by parent 100%
   const { columnsWidth, columnIndex, setColumnsWidth } = props as any;
 
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: id });
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: id });
 
   const [width, setWidth] = React.useState(columnsWidth[columnIndex]);
   React.useEffect(() => {
@@ -22,11 +23,18 @@ const Column: FC<ColumnProps> = ({ children, id, ...props }) => {
   }, [columnsWidth, columnIndex]);
 
   const handleResize = (initialWidth: any) => (e: any) => {
-    if (columnsWidth && columnIndex !== undefined && columnsWidth[columnIndex]) {
+    if (
+      columnsWidth &&
+      columnIndex !== undefined &&
+      columnsWidth[columnIndex]
+    ) {
       const startX = e.clientX;
       const moveHandler = (moveEvent: any) => {
         const currentX = moveEvent.clientX;
-        let newWidth = Math.max(20, parseInt(initialWidth, 10) + (currentX - startX)); // Ensure newWidth is at least 20px
+        let newWidth = Math.max(
+          20,
+          parseInt(initialWidth, 10) + (currentX - startX),
+        ); // Ensure newWidth is at least 20px
 
         // newWidth = Math.max(newWidth, columnsWidth[columnIndex]);
         setColumnsWidth((prevWidths: any) => {

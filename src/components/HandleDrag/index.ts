@@ -1,1 +1,1 @@
-export {default} from './HandleDrag';
+export { default } from "./HandleDrag";

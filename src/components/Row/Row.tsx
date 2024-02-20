@@ -15,7 +15,7 @@ const Row: FC<RowProps> = ({ children, columnsWidth, columnIndex }) => {
           React.cloneElement(child, {
             columnsWidth,
             columnIndex: index,
-          })
+          }),
         )}
     </div>
   );

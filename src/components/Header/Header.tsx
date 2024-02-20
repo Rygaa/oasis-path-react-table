@@ -1,4 +1,7 @@
-import { horizontalListSortingStrategy, SortableContext } from "@dnd-kit/sortable";
+import {
+  horizontalListSortingStrategy,
+  SortableContext,
+} from "@dnd-kit/sortable";
 import React, { FC, HTMLAttributes, ReactElement, ReactNode } from "react";
 
 interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
@@ -8,9 +11,17 @@ interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
   key?: "lol";
 }
 
-const Header: FC<HeaderProps> = ({ key = "lol", children, setColumnsWidth, columnsWidth, ...props }) => {
+const Header: FC<HeaderProps> = ({
+  key = "lol",
+  children,
+  setColumnsWidth,
+  columnsWidth,
+  ...props
+}) => {
   const columns: { id: string }[] =
-    children && children.length > 0 ? children.map((child) => ({ id: child.props.id })) : [];
+    children && children.length > 0
+      ? children.map((child) => ({ id: child.props.id }))
+      : [];
 
   return (
     <div
@@ -33,7 +44,7 @@ const Header: FC<HeaderProps> = ({ key = "lol", children, setColumnsWidth, colum
               columnsWidth,
               columnIndex: index,
               setColumnsWidth,
-            })
+            }),
           )}
       </SortableContext>
     </div>

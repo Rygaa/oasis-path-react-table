@@ -8,23 +8,22 @@ interface BodyProps extends HTMLAttributes<HTMLDivElement> {
 
 const Body: FC<BodyProps> = ({ children, columnsWidth, ...props }) => {
   return (
-
-      <VList
-        className="vlist"
-        style={{
-          height: "100%",
-          width: "100%",
-        }}
-      >
-        {children &&
-          children.length > 0 &&
-          children.map((child, index) =>
-            React.cloneElement(child, {
-              columnsWidth,
-              columnIndex: index,
-            })
-          )}
-      </VList>
+    <VList
+      className="vlist"
+      style={{
+        height: "100%",
+        width: "100%",
+      }}
+    >
+      {children &&
+        children.length > 0 &&
+        children.map((child, index) =>
+          React.cloneElement(child, {
+            columnsWidth,
+            columnIndex: index,
+          }),
+        )}
+    </VList>
   );
 };
 

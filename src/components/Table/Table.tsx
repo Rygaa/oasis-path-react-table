@@ -8,9 +8,17 @@ interface TableProps extends HTMLAttributes<HTMLDivElement> {
   handleDragEnd: (event: any) => void;
 }
 
-const Table: FC<TableProps> = ({ children, handleDragEnd, setColumnsWidth, columnsWidth, ...props }) => {
+const Table: FC<TableProps> = ({
+  children,
+  handleDragEnd,
+  setColumnsWidth,
+  columnsWidth,
+  ...props
+}) => {
   const columnsNumber = children[0].props.children.length;
-  const [arr, setArr] = React.useState<number[]>(Array.from({ length: columnsNumber }, () => 200));
+  const [arr, setArr] = React.useState<number[]>(
+    Array.from({ length: columnsNumber }, () => 200),
+  );
 
   return (
     <div
@@ -21,22 +29,27 @@ const Table: FC<TableProps> = ({ children, handleDragEnd, setColumnsWidth, colum
         maxWidth: "1000px",
         width: "100%",
         height: "400px",
-      }}>
+      }}
+    >
       <div>Title</div>
       <div
         style={{
           backgroundColor: "gray",
           overflow: "scroll",
           whiteSpace: "nowrap",
-        }}>
-        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        }}
+      >
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
           {children &&
             children.length > 0 &&
             children.map((child) =>
               React.cloneElement(child, {
                 columnsWidth: arr,
                 setColumnsWidth: setArr,
-              })
+              }),
             )}
         </DndContext>
       </div>
