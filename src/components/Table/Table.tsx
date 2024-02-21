@@ -3,22 +3,17 @@ import React, { FC, HTMLAttributes, ReactElement } from "react";
 
 interface TableProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactElement[];
-  columnsWidth?: number[];
-  setColumnsWidth?: any;
   handleDragEnd: (event: any) => void;
+  title?: string;
 }
 
-const Table: FC<TableProps> = ({
-  children,
-  handleDragEnd,
-  setColumnsWidth,
-  columnsWidth,
-  ...props
-}) => {
-  const columnsNumber = children[0].props.children.length;
-  const [arr, setArr] = React.useState<number[]>(
-    Array.from({ length: columnsNumber }, () => 200),
-  );
+const Table: FC<TableProps> = ({ children, handleDragEnd, title, ...props }) => {
+  const [columnsNumber, setColumnsNumber] = React.useState<number>(children[0].props.children.length);
+  const [arr, setArr] = React.useState<number[]>(Array.from({ length: columnsNumber }, () => 200));
+
+  React.useEffect(() => {
+    setColumnsNumber(children[0].props.children.length);
+  }, [children]);
 
   return (
     <div
@@ -29,20 +24,34 @@ const Table: FC<TableProps> = ({
         maxWidth: "1000px",
         width: "100%",
         height: "400px",
-      }}
-    >
-      <div>Title</div>
+      }}>
       <div
         style={{
-          backgroundColor: "gray",
+          backgroundColor: "white",
+          borderBottom: "1px solid #E7E7E7",
+          padding: "10px 20px",
+
+          fontFamily: "Monospace",
+          fontStyle: "normal",
+          fontWeight: 600,
+          fontSize: "15px",
+          lineHeight: "15px",
+          display: "flex",
+          justifyContent: "flex-start",
+          height: "2.5rem",
+          alignItems: "center",
+          color: "#5A5A5A",
+        }}>
+        {title}
+      </div>
+      <div
+        style={{
+          backgroundColor: "white",
           overflow: "scroll",
           whiteSpace: "nowrap",
-        }}
-      >
-        <DndContext
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
+          height: "100%",
+        }}>
+        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           {children &&
             children.length > 0 &&
             children.map((child) =>

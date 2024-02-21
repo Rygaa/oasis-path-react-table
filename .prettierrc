@@ -1,0 +1,25 @@
+{
+  "tabnine.experimentalAutoImports": true,
+  "files.autoSave": "afterDelay",
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "bracketSameLine": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.fontFamily": "'Cascadia Code'",
+  "editor.fontLigatures": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  },
+  "github.copilot.advanced": {},
+  "workbench.iconTheme": "material-icon-theme",
+  "window.zoomLevel": 1,
+  "printWidth": 130,
+  "tabWidth": 2
+}

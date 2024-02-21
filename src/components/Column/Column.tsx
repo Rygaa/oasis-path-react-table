@@ -8,35 +8,31 @@ import HandleDrag from "../HandleDrag";
 interface ColumnProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   id: string | number;
+  defaultWidth?: number;
+  dragElement?: ReactNode;
 }
 
-const Column: FC<ColumnProps> = ({ children, id, ...props }) => {
+const Column: FC<ColumnProps> = ({ children, id, defaultWidth, dragElement, ...props }) => {
   // Received by parent 100%
   const { columnsWidth, columnIndex, setColumnsWidth } = props as any;
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: id });
+  const [width, setWidth] = React.useState(defaultWidth || columnsWidth[columnIndex]);
 
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: id });
+  React.useEffect(() => {
+    console.log("----");
+    // console.log(`id: ${id}`);
+  }, []);
 
-  const [width, setWidth] = React.useState(columnsWidth[columnIndex]);
   React.useEffect(() => {
     setWidth(columnsWidth[columnIndex]);
   }, [columnsWidth, columnIndex]);
 
   const handleResize = (initialWidth: any) => (e: any) => {
-    if (
-      columnsWidth &&
-      columnIndex !== undefined &&
-      columnsWidth[columnIndex]
-    ) {
+    if (columnsWidth && columnIndex !== undefined && columnsWidth[columnIndex]) {
       const startX = e.clientX;
       const moveHandler = (moveEvent: any) => {
         const currentX = moveEvent.clientX;
-        let newWidth = Math.max(
-          20,
-          parseInt(initialWidth, 10) + (currentX - startX),
-        ); // Ensure newWidth is at least 20px
-
-        // newWidth = Math.max(newWidth, columnsWidth[columnIndex]);
+        let newWidth = Math.max(20, parseInt(initialWidth, 10) + (currentX - startX));
         setColumnsWidth((prevWidths: any) => {
           const updatedWidths = [...prevWidths];
           updatedWidths[columnIndex] = newWidth;
@@ -59,18 +55,26 @@ const Column: FC<ColumnProps> = ({ children, id, ...props }) => {
     transition,
     display: "inline-block",
     position: "relative",
-    border: "1px solid black",
+    // borderBottom: "1px solid #5A5A5A",
+    padding: "12.5px 10px",
     cursor: "move",
-    width: `${width}px`,
+    width: `calc(${width}px - 20px)`,
     overflow: "hidden",
     height: "100%",
-    flex: "1",
-    // ...props.style,
+    /* Scientificname */
+    fontFamily: "Monospace",
+    fontStyle: "normal",
+    fontWeight: 600,
+    fontSize: "15px",
+    lineHeight: "15px",
+    alignItems: "center",
+    color: "#5A5A5A",
+    borderRight: "1px solid #F3F3F3",
+    ...props.style,
   };
 
   return (
-    // @ts-ignore
-    <div ref={setNodeRef} {...props} style={parentstyle}>
+    <div ref={setNodeRef} {...props} style={parentstyle as React.CSSProperties}>
       <div
         style={{
           position: "absolute",
@@ -78,22 +82,18 @@ const Column: FC<ColumnProps> = ({ children, id, ...props }) => {
           top: "50%",
           cursor: "move",
           transform: "translateY(-50%)",
+          marginRight: "5px",
         }}
         {...attributes}
-        {...listeners}
-      >
-        <HandleDrag />
+        {...listeners}>
+        {dragElement}
       </div>
       <div
         style={{
           display: "flex",
-          // alignItems: "center",
-          // justifyContent: "center",
           boxSizing: "border-box",
-          // minWidth: 0,
           width: "100%",
-        }}
-      >
+        }}>
         {children}
       </div>
       <ResizeHandle onResize={handleResize(width)} />
@@ -111,11 +111,10 @@ const ResizeHandle = ({ onResize }: { onResize: any }) => {
         width: "10px",
         bottom: "0",
         transform: "translateY(-50%)",
-        background: "red",
+        // background: "red",
         cursor: "ew-resize",
       }}
-      onMouseDown={onResize}
-    ></div>
+      onMouseDown={onResize}></div>
   );
 };
 
