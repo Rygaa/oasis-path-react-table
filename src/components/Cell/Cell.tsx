@@ -21,7 +21,6 @@ const Cell: FC<CellProps> = ({ children, columnIndex, columnsWidth, ...props }) 
     alignItems: "center",
     color: "#5A5A5A",
     padding: "12.5px 10px",
-
     ...props.style,
   };
 

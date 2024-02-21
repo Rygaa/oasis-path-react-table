@@ -1,5 +1,4 @@
 import React, { FC, HTMLAttributes, ReactElement } from "react";
-import { VList } from "virtua";
 
 interface BodyProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactElement[];
@@ -8,21 +7,17 @@ interface BodyProps extends HTMLAttributes<HTMLDivElement> {
 
 const Body: FC<BodyProps> = ({ children, columnsWidth, ...props }) => {
   return (
-    <VList
-      className="vlist"
-      style={{
-        height: "100%",
-        width: "100%",
-      }}>
+    <div style={{ ...props.style }}>
       {children &&
         children.length > 0 &&
         children.map((child, index) =>
           React.cloneElement(child, {
+            key: child.props.id,
             columnsWidth,
             columnIndex: index,
           }),
         )}
-    </VList>
+    </div>
   );
 };
 

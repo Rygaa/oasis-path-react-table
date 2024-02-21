@@ -3,7 +3,7 @@ import React, { FC, HTMLAttributes, ReactElement } from "react";
 
 interface TableProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactElement[];
-  handleDragEnd: (event: any) => void;
+  handleDragEnd?: (event: any) => void;
   title?: string;
 }
 

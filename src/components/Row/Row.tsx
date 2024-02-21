@@ -1,14 +1,15 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, HTMLAttributes, ReactElement } from "react";
 
-interface RowProps {
+interface RowProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactElement[];
   columnsWidth?: number[];
   columnIndex?: number;
+  id?: string;
 }
 
-const Row: FC<RowProps> = ({ children, columnsWidth, columnIndex }) => {
+const Row: FC<RowProps> = ({ id, children, columnsWidth, ...props }) => {
   return (
-    <div style={{ display: "flex", height: "100%", width: "100%" }}>
+    <div style={{ display: "flex", ...props.style }}>
       {children &&
         children.length > 0 &&
         children.map((child, index) =>
