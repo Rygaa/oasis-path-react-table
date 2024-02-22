@@ -37,9 +37,9 @@ const Header: FC<HeaderProps> = ({ key = "lol", children, setColumnsWidth, colum
       }}
       {...props}>
       <SortableContext items={columnsId} strategy={horizontalListSortingStrategy}>
-        {children &&
-          children.length > 0 &&
-          children.map((child, index) =>
+        {unifiedChildren &&
+          unifiedChildren.length > 0 &&
+          unifiedChildren.map((child, index) =>
             React.cloneElement(child, {
               columnsWidth,
               columnIndex: index,
