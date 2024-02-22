@@ -17,14 +17,15 @@ const Table: FC<TableProps> = ({ children, handleDragEnd, title, ...props }) => 
 
   return (
     <div
-      {...props}
       style={{
         display: "flex",
         flexDirection: "column",
         maxWidth: "1000px",
         width: "100%",
         height: "400px",
-      }}>
+        ...props.style,
+      }}
+      {...props}>
       <div
         style={{
           backgroundColor: "white",
@@ -58,7 +59,7 @@ const Table: FC<TableProps> = ({ children, handleDragEnd, title, ...props }) => 
               React.cloneElement(child, {
                 columnsWidth: arr,
                 setColumnsWidth: setArr,
-              }),
+              })
             )}
         </DndContext>
       </div>
