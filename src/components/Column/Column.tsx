@@ -19,11 +19,6 @@ const Column: FC<ColumnProps> = ({ children, id, defaultWidth, dragElement, ...p
   const [width, setWidth] = React.useState(defaultWidth || columnsWidth[columnIndex]);
 
   React.useEffect(() => {
-    console.log("----");
-    // console.log(`id: ${id}`);
-  }, []);
-
-  React.useEffect(() => {
     setWidth(columnsWidth[columnIndex]);
   }, [columnsWidth, columnIndex]);
 
@@ -111,7 +106,7 @@ const ResizeHandle = ({ onResize }: { onResize: any }) => {
         width: "10px",
         bottom: "0",
         transform: "translateY(-50%)",
-        // background: "red",
+        background: "red",
         cursor: "ew-resize",
       }}
       onMouseDown={onResize}></div>

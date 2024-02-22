@@ -9,7 +9,19 @@ interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Header: FC<HeaderProps> = ({ key = "lol", children, setColumnsWidth, columnsWidth, ...props }) => {
-  const columns: { id: string }[] = children && children.length > 0 ? children.map((child) => ({ id: child.props.id })) : [];
+  const [unifiedChildren, setUnifiedChildren] = React.useState<React.ReactElement[]>(
+    React.Children.toArray(children) as React.ReactElement[]
+  );
+
+  React.useEffect(() => {
+    setUnifiedChildren(React.Children.toArray(children) as React.ReactElement[]);
+  }, [children]);
+
+  const [columnsId, setColumnsId] = React.useState<{ id: string }[]>([]);
+
+  React.useEffect(() => {
+    setColumnsId(unifiedChildren.map((child) => ({ id: child.props.id })));
+  }, [unifiedChildren]);
 
   return (
     <div
@@ -24,7 +36,7 @@ const Header: FC<HeaderProps> = ({ key = "lol", children, setColumnsWidth, colum
         backgroundColor: "white",
       }}
       {...props}>
-      <SortableContext items={columns} strategy={horizontalListSortingStrategy}>
+      <SortableContext items={columnsId} strategy={horizontalListSortingStrategy}>
         {children &&
           children.length > 0 &&
           children.map((child, index) =>
@@ -32,7 +44,7 @@ const Header: FC<HeaderProps> = ({ key = "lol", children, setColumnsWidth, colum
               columnsWidth,
               columnIndex: index,
               setColumnsWidth,
-            }),
+            })
           )}
       </SortableContext>
     </div>

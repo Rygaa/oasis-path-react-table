@@ -8,15 +8,23 @@ interface RowProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Row: FC<RowProps> = ({ id, children, columnsWidth, ...props }) => {
+  const [unifiedChildren, setUnifiedChildren] = React.useState<React.ReactElement[]>(
+    React.Children.toArray(children) as React.ReactElement[]
+  );
+
+  React.useEffect(() => {
+    setUnifiedChildren(React.Children.toArray(children) as React.ReactElement[]);
+  }, [children]);
+
   return (
     <div style={{ display: "flex", ...props.style }}>
-      {children &&
-        children.length > 0 &&
-        children.map((child, index) =>
+      {unifiedChildren &&
+        unifiedChildren.length > 0 &&
+        unifiedChildren.map((child, index) =>
           React.cloneElement(child, {
             columnsWidth,
             columnIndex: index,
-          }),
+          })
         )}
     </div>
   );
